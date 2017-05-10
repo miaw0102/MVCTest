@@ -11,8 +11,7 @@ namespace MVCTest.Models.EF
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class 客戶資料
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -23,18 +22,9 @@ namespace MVCTest.Models.EF
         }
     
         public int Id { get; set; }
-
-        [Required(ErrorMessage = "請輸入客戶名稱 ")]
         public string 客戶名稱 { get; set; }
-
-        [Required(ErrorMessage = "請輸入統一編號")]
-        [MinLength(8,ErrorMessage = "統一編號長度為8碼"), MaxLength(8,ErrorMessage = "統一編號長度為8碼")]
         public string 統一編號 { get; set; }
-
-        [Required(ErrorMessage = "請輸入電話")]
         public string 電話 { get; set; }
-        
-
         public string 傳真 { get; set; }
         public string 地址 { get; set; }
         public string Email { get; set; }
