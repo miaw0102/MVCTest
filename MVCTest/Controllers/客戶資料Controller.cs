@@ -115,6 +115,32 @@ namespace MVCTest.Controllers
             return RedirectToAction("Index");
         }
 
+        /// <summary>
+        /// 實作一個清單頁面，顯示欄位有「客戶名稱、聯絡人數量、銀行帳戶數量」共三個欄位
+        /// </summary>
+        /// <returns></returns>
+        //public ActionResult 客戶資料清單()
+        //{
+        //    var 聯絡人數量 = (from 客戶聯絡人 in db.客戶聯絡人
+        //                 from 客戶資料 in db.客戶資料
+        //                 where 客戶聯絡人.客戶Id== 客戶資料.Id
+        //                 select 客戶聯絡人).Count();
+
+        //    var 銀行帳戶數量 = (from 客戶銀行資訊 in db.客戶銀行資訊
+        //                  from 客戶資料 in db.客戶資料
+        //                  where 客戶銀行資訊.客戶Id== 客戶資料.Id
+        //                  select 客戶銀行資訊).Count();
+
+        //    var data = (from a in db.客戶資料
+        //               select new {a.客戶名稱, 聯絡人數量 , 銀行帳戶數量 }).Distinct();
+
+
+
+        //    return View(data);
+        //}
+
+       
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
