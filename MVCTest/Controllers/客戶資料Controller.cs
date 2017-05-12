@@ -118,7 +118,6 @@ namespace MVCTest.Controllers
             //db.客戶資料.Remove(客戶資料);
             客戶資料.是否已刪除 = true;
             db.SaveChanges();
-            db.SaveChanges();
             return RedirectToAction("Index");
         }
 
