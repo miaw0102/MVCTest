@@ -1,14 +1,12 @@
 ﻿@model IEnumerable<MVCTest.Models.EF.客戶資料清單>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "客戶資料清單";
 }
 
-<h2>Index</h2>
+<h2>客戶資料清單</h2>
 
-<p>
-    @*@Html.ActionLink("Create New", "Create")*@
-</p>
+
 <table class="table">
     <tr>
         <th>
@@ -23,7 +21,8 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model)
+{
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.客戶名稱)
@@ -34,11 +33,11 @@
         <td>
             @Html.DisplayFor(modelItem => item.銀行帳戶數量)
         </td>
-        <td>
-            @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+        @*<td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
             @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
-        </td>
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>*@
     </tr>
 }
 

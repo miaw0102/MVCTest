@@ -14,10 +14,15 @@ namespace MVCTest.Controllers
     {
         private 客戶資料Entities db = new 客戶資料Entities();
 
+        public ActionResult 客戶資料清單()
+        {
+            return View(db.客戶資料清單.ToList());
+        }
+        
         // GET: 客戶資料
         public ActionResult Index()
         {
-            return View(db.客戶資料.ToList());
+            return View(db.客戶資料.Where(p=>false==p.是否已刪除).ToList());
         }
 
         // GET: 客戶資料/Details/5
@@ -28,7 +33,7 @@ namespace MVCTest.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             客戶資料 客戶資料 = db.客戶資料.Find(id);
-            if (客戶資料 == null)
+            if (客戶資料 == null || 客戶資料.是否已刪除==true)
             {
                 return HttpNotFound();
             }
@@ -110,7 +115,9 @@ namespace MVCTest.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             客戶資料 客戶資料 = db.客戶資料.Find(id);
-            db.客戶資料.Remove(客戶資料);
+            //db.客戶資料.Remove(客戶資料);
+            客戶資料.是否已刪除 = true;
+            db.SaveChanges();
             db.SaveChanges();
             return RedirectToAction("Index");
         }

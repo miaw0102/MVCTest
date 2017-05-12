@@ -33,7 +33,8 @@ namespace MVCTest.Models.EF
         public string 地址 { get; set; }
         
         [StringLength(250, ErrorMessage="欄位長度不得大於 250 個字元")]
-        [RegularExpression(@"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4})$", ErrorMessage = "請輸入正確的電子郵件位址.")]
+        //[RegularExpression(@"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4})$", ErrorMessage = "請輸入正確的電子郵件位址.")]
+        [EmailAddress]
         public string Email { get; set; }
     
         public virtual ICollection<客戶銀行資訊> 客戶銀行資訊 { get; set; }
