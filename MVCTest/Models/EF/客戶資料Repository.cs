@@ -29,6 +29,13 @@ namespace MVCTest.Models.EF
         {
             this.UnitOfWork.Context.Entry(客戶資料).State = EntityState.Modified;
         }
+
+        public override void Delete(客戶資料 entity)
+        {
+            this.UnitOfWork.Context.Configuration.ValidateOnSaveEnabled = false;
+
+            entity.是否已刪除 = true;
+        }
     }
 
 	public  interface I客戶資料Repository : IRepository<客戶資料>

@@ -30,7 +30,10 @@ namespace MVCTest.Controllers
             //var data = repo.All()//db.客戶資料
             //          .Where(p => false == p.是否已刪除).AsQueryable();
 
-            var data = repo.Get客戶資料列表頁所有資料(showAll:true);
+            //var data = repo.Get客戶資料列表頁所有資料(showAll:true);
+            var data = repo
+                      .Get客戶資料列表頁所有資料(showAll: false)
+                      .Where(p=>false==p.是否已刪除).AsQueryable();
 
             if (!String.IsNullOrEmpty(keyword))
             {
