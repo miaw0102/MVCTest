@@ -12,11 +12,14 @@ namespace MVCTest.Controllers
 {
     public class 客戶資料Controller : Controller
     {
-        private 客戶資料Entities db = new 客戶資料Entities();
+        客戶資料Repository repo = RepositoryHelper.Get客戶資料Repository();
+
+        //private 客戶資料Entities db = new 客戶資料Entities();
 
         public ActionResult 客戶資料清單()
         {
-            return View(db.客戶資料清單.ToList());
+            //return View(db.客戶資料清單.ToList());
+            return View(repo.Get客戶資料列表頁所有資料(true));
         }
         
         // GET: 客戶資料
@@ -24,7 +27,10 @@ namespace MVCTest.Controllers
         {
             //return View(db.客戶資料.Where(p=>false==p.是否已刪除).ToList());
 
-            var data = db.客戶資料.Where(p => false == p.是否已刪除).AsQueryable();
+            //var data = repo.All()//db.客戶資料
+            //          .Where(p => false == p.是否已刪除).AsQueryable();
+
+            var data = repo.Get客戶資料列表頁所有資料(showAll:true);
 
             if (!String.IsNullOrEmpty(keyword))
             {
@@ -41,7 +47,8 @@ namespace MVCTest.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            客戶資料 客戶資料 = db.客戶資料.Find(id);
+            //客戶資料 客戶資料 = db.客戶資料.Find(id);
+            客戶資料 客戶資料 = repo.Get單筆資料ById(id.Value);
             if (客戶資料 == null || 客戶資料.是否已刪除==true)
             {
                 return HttpNotFound();
@@ -64,8 +71,11 @@ namespace MVCTest.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.客戶資料.Add(客戶資料);
-                db.SaveChanges();
+                //db.客戶資料.Add(客戶資料);
+                //db.SaveChanges();
+
+                repo.Add(客戶資料);
+                repo.UnitOfWork.Commit();
                 return RedirectToAction("Index");
             }
 
@@ -79,7 +89,8 @@ namespace MVCTest.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            客戶資料 客戶資料 = db.客戶資料.Find(id);
+            //客戶資料 客戶資料 = db.客戶資料.Find(id);
+            客戶資料 客戶資料 = repo.Get單筆資料ById(id.Value);
             if (客戶資料 == null)
             {
                 return HttpNotFound();
@@ -96,8 +107,10 @@ namespace MVCTest.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(客戶資料).State = EntityState.Modified;
-                db.SaveChanges();
+                //db.Entry(客戶資料).State = EntityState.Modified;
+                //db.SaveChanges();
+                repo.update(客戶資料);
+                repo.UnitOfWork.Commit();
                 return RedirectToAction("Index");
             }
             return View(客戶資料);
@@ -110,7 +123,8 @@ namespace MVCTest.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            客戶資料 客戶資料 = db.客戶資料.Find(id);
+            //客戶資料 客戶資料 = db.客戶資料.Find(id);
+            客戶資料 客戶資料 = repo.Get單筆資料ById(id.Value);
             if (客戶資料 == null)
             {
                 return HttpNotFound();
@@ -123,10 +137,13 @@ namespace MVCTest.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            客戶資料 客戶資料 = db.客戶資料.Find(id);
-            //db.客戶資料.Remove(客戶資料);
-            客戶資料.是否已刪除 = true;
-            db.SaveChanges();
+            //客戶資料 客戶資料 = db.客戶資料.Find(id);
+            //客戶資料.是否已刪除 = true;
+            //db.SaveChanges();
+
+            客戶資料 客戶資料 = repo.Get單筆資料ById(id);
+            repo.Delete(客戶資料);
+            repo.UnitOfWork.Commit();
             return RedirectToAction("Index");
         }
 
@@ -156,13 +173,13 @@ namespace MVCTest.Controllers
 
        
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing)
+        //    {
+        //        db.Dispose();
+        //    }
+        //    base.Dispose(disposing);
+        //}
     }
 }
