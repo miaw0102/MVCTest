@@ -60,6 +60,9 @@
 
     </dl>
 </div>
+
+@Html.Partial("../客戶聯絡人/Index", Model.客戶聯絡人)
+
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")

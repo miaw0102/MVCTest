@@ -13,13 +13,19 @@ namespace MVCTest.Controllers
     public class 客戶資料Controller : Controller
     {
         客戶資料Repository repo = RepositoryHelper.Get客戶資料Repository();
+        客戶資料清單Repository repo客戶資料清單;
+
+        public 客戶資料Controller()
+        {
+            repo客戶資料清單 = RepositoryHelper.Get客戶資料清單Repository(repo.UnitOfWork);
+        }
 
         //private 客戶資料Entities db = new 客戶資料Entities();
 
         public ActionResult 客戶資料清單()
         {
             //return View(db.客戶資料清單.ToList());
-            return View(repo.Get客戶資料列表頁所有資料(true));
+            return View(repo客戶資料清單.All().ToList());
         }
         
         // GET: 客戶資料
@@ -106,13 +112,13 @@ namespace MVCTest.Controllers
         // 詳細資訊，請參閱 http://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,客戶名稱,統一編號,電話,傳真,地址,Email")] 客戶資料 客戶資料)
+        public ActionResult Edit(int id, FormCollection form)
+        //[Bind(Include = "Id,客戶名稱,統一編號,電話,傳真,地址,Email")] 客戶資料 客戶資料
         {
-            if (ModelState.IsValid)
+            var 客戶資料 = repo.Find(id);
+
+            if (TryUpdateModel(客戶資料))
             {
-                //db.Entry(客戶資料).State = EntityState.Modified;
-                //db.SaveChanges();
-                repo.update(客戶資料);
                 repo.UnitOfWork.Commit();
                 return RedirectToAction("Index");
             }
@@ -174,15 +180,15 @@ namespace MVCTest.Controllers
         //    return View(data);
         //}
 
-       
 
-        //protected override void Dispose(bool disposing)
-        //{
-        //    if (disposing)
-        //    {
-        //        db.Dispose();
-        //    }
-        //    base.Dispose(disposing);
-        //}
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                repo.UnitOfWork.Context.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }

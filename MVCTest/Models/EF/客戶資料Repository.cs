@@ -36,6 +36,11 @@ namespace MVCTest.Models.EF
 
             entity.是否已刪除 = true;
         }
+
+        public 客戶資料 Find(int id)
+        {
+            return this.All().FirstOrDefault(p=>p.Id==id);
+        }
     }
 
 	public  interface I客戶資料Repository : IRepository<客戶資料>
